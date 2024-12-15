@@ -4,15 +4,23 @@ import DrawerWrapper from "../../../components/Modal/DrawerWrapper";
 import TextInputField from "../../../components/Forms/TextInputField";
 import DropdownField from "../../../components/Forms/DropdownField";
 import { createUser, updateUser } from "../../../api/users";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export default function UserForm({ user, isOpen, onCancel }) {
+  const generateRandomImage = () => {
+    const gender = Math.random() > 0.5 ? "men" : "women";
+    const number = Math.floor(Math.random() * 100);
+    return `https://randomuser.me/api/portraits/${gender}/${number}.jpg`;
+  };
   // default value
   const defaultValue = {
-    name: user?.name || "",
-    email: user?.email || "",
-    phone: user?.phone || "",
-    address: user?.address || "",
-    role: user?.role || "user",
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    role: "user",
+    image: generateRandomImage(),
   };
 
   const {
@@ -20,7 +28,8 @@ export default function UserForm({ user, isOpen, onCancel }) {
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
-  } = useForm({ defaultValues: defaultValue });
+    reset,
+  } = useForm({ defaultValues: user || defaultValue });
 
   const roles = [
     { value: "admin", label: "Admin" },
@@ -30,19 +39,26 @@ export default function UserForm({ user, isOpen, onCancel }) {
   const handleFormSubmit = async (data) => {
     try {
       if (user) {
-        await createUser(`/users/${data.uuid}`, data);
+        await updateUser(data);
+        toast.success("User updated successfully!");
       } else {
-        await updateUser("/users", data);
+        await createUser(data);
+        toast.success("User created successfully!");
       }
-      alert("User saved successfully!");
     } catch (error) {
       console.error("Error saving user:", error);
-      alert("An error occurred while saving the user.");
+      toast.error("An error occurred while saving the user.");
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      reset(user);
+    }
+  }, [user]);
+
   return (
-    <DrawerWrapper isOpen={isOpen} onClose={onCancel}>
+    <DrawerWrapper isOpen={isOpen} onClose={onCancel} title={user ? "Edit user" : "Add user"}>
       <FormLayout
         onSubmit={handleSubmit(handleFormSubmit)}
         onCancel={onCancel}
@@ -83,7 +99,22 @@ export default function UserForm({ user, isOpen, onCancel }) {
           error={errors.address}
           required={true}
         />
-        <DropdownField label="Role" name="role" options={roles} control={control} error={errors.role} required={true} />
+        <TextInputField
+          label="Image"
+          name="image"
+          placeholder="Image url"
+          register={register}
+          error={errors.image}
+          required={true}
+        />
+        <DropdownField
+          label="Role of user"
+          name="role"
+          options={roles}
+          control={control}
+          error={errors.role}
+          required={true}
+        />
       </FormLayout>
     </DrawerWrapper>
   );

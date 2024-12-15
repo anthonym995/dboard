@@ -3,7 +3,7 @@ export default function FormLayout(props) {
   return (
     <form className="" onSubmit={onSubmit}>
       {/* form content will comes here */}
-      <div>{children}</div>
+      <div className="flex flex-col space-y-4">{children}</div>
 
       {/* form button will comes here */}
       <div className="flex justify-end space-x-4 mt-6 border-t pt-4">
@@ -14,7 +14,6 @@ export default function FormLayout(props) {
         >
           {cancelText}
         </button>
-
         <button
           type="submit"
           className="px-2.5 py-1.5 text-sm rounded-md bg-indigo-600 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

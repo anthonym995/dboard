@@ -6,12 +6,15 @@ import ErrorState from "../../components/ui/ErrorState";
 import EmptyState from "../../components/ui/EmptyState";
 import SubtleButton from "../../components/Buttons/SubtleButton";
 import DangerButton from "../../components/Buttons/DangerButton";
+import UserForm from "./components/UserForm";
 
 const UserDetail = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const fetchUser = async () => {
     try {
@@ -27,6 +30,11 @@ const UserDetail = () => {
   useEffect(() => {
     fetchUser();
   }, []);
+
+  const hadleEditUser = (user) => {
+    setSelectedUser(user);
+    setIsOpen(true);
+  };
 
   if (loading) {
     return (
@@ -119,10 +127,13 @@ const UserDetail = () => {
 
         {/* Action Section */}
         <div className="bg-gray-50 px-6 py-4 flex justify-start gap-4">
-          <SubtleButton label="Edit Profile" />
+          <SubtleButton label="Edit Profile" onClick={() => hadleEditUser(user)} />
           <DangerButton label="Delete" onClick={console.log("you clicked me")} />
         </div>
       </div>
+
+      {/* form */}
+      <UserForm user={selectedUser} isOpen={isOpen} onCancel={() => setIsOpen(false)} />
     </div>
   );
 };

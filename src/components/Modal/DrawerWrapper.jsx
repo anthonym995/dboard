@@ -36,7 +36,7 @@ export default function DrawerWrapper(props) {
               <DialogPanel className="pointer-events-auto w-screen max-w-md bg-white shadow-xl pt-16">
                 <div className="flex h-full flex-col divide-y divide-gray-200">
                   <div className="flex min-h-0 flex-1 flex-col overflow-y-scroll py-6">
-                    <div className="px-4 sm:px-6">
+                    <div className="px-4">
                       <div className="flex items-center justify-between">
                         <DialogTitle className="text-base font-semibold text-gray-900">{title}</DialogTitle>
                         <div className="ml-3 flex h-7 items-center">
