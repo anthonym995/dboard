@@ -27,20 +27,19 @@ export const createUser = async (userData) => {
   }
 };
 
-
-export const updateUser = async (userId, userData) => {
+export const updateUser = async (userData) => {
   try {
-    const response = await baseAPI.put(`/users/${userId}`, userData);
+    const response = await baseAPI.put(`/users/${userData?.uuid}`, userData);
     return response.data;
   } catch (error) {
     throw new Error(error.message || "An error occurred while updating the user");
   }
 };
 
-export const deleteUser = async (userId) => {
+export const deleteUser = async (uuid) => {
   try {
-    const response = await baseAPI.delete(`/users/${userId}`);
-    return response.data; // This may return a success message or an empty response, depending on your API.
+    const response = await baseAPI.delete(`/users/${uuid}`);
+    return response.data;
   } catch (error) {
     throw new Error(error.message || "An error occurred while deleting the user");
   }

@@ -5,7 +5,7 @@ import { Fragment } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function DrawerWrapper(props) {
-  const { title, isOpen, onClose, children, onSubmit, saveLabel = "Submit", cancelLabel = "Cancel" } = props;
+  const { title, isOpen, onClose, children } = props;
 
   return (
     <Dialog as="div" className="relative z-10" open={isOpen} onClose={onClose}>
@@ -52,9 +52,9 @@ export default function DrawerWrapper(props) {
                       </div>
                     </div>
                     {/* main content will come here */}
-                    <div className="relative mt-6 flex-1 px-4 sm:px-6">{children}</div>
+                    <div className="relative mt-4 flex-1 px-4">{children}</div>
                   </div>
-                  <div className="flex shrink-0 justify-end px-4 py-4">
+                  {/* <div className="flex shrink-0 justify-end px-4 py-4">
                     {onClose && (
                       <button
                         type="button"
@@ -64,16 +64,15 @@ export default function DrawerWrapper(props) {
                         {cancelLabel}
                       </button>
                     )}
-                    {/* {onSubmit && (
+                    {onSubmit && (
                       <button
                         type="button"
                         onClick={onSubmit}
                         className="ml-4 inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                       >
                         {saveLabel}
-                      </button>  )} */}
-                      
-                  </div>
+                      </button>  )}
+                  </div> */}
                 </div>
               </DialogPanel>
             </TransitionChild>

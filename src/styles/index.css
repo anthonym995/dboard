@@ -11,18 +11,24 @@
 /* Shake animation for error */
 @keyframes shake {
   0% {
-    transform: translateX(-10px);
+    transform: translateX(-10px) rotate(-2deg) scale(1.02);
+  }
+  25% {
+    transform: translateX(10px) rotate(2deg) scale(1.02);
   }
   50% {
-    transform: translateX(10px);
+    transform: translateX(-10px) rotate(-2deg) scale(1.02);
+  }
+  75% {
+    transform: translateX(10px) rotate(2deg) scale(1.02);
   }
   100% {
-    transform: translateX(-10px);
+    transform: translateX(-10px) rotate(-2deg) scale(1.02);
   }
 }
 
 .animate-shake {
-  animation: shake 0.5s ease-in-out;
+  animation: shake 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
 }
 
 /* Pulse animation for empty state (optional if you want a custom one) */
