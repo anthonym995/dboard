@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Loader from "../../components/ui/Loader";
-import { fetchUserById } from "../../api/users";
+import { fetchUserById , deleteUser } from "../../api/users";
 import ErrorState from "../../components/ui/ErrorState";
 import EmptyState from "../../components/ui/EmptyState";
 import SubtleButton from "../../components/Buttons/SubtleButton";
 import DangerButton from "../../components/Buttons/DangerButton";
 import UserForm from "./components/UserForm";
+import { useNavigate } from "react-router-dom";
 
 const UserDetail = () => {
   const { id } = useParams();
@@ -15,6 +16,9 @@ const UserDetail = () => {
   const [error, setError] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [Deleting , setDeleting] = useState(false);
+  const navigate = useNavigate();
+
 
   const fetchUser = async () => {
     try {
@@ -35,6 +39,25 @@ const UserDetail = () => {
     setSelectedUser(user);
     setIsOpen(true);
   };
+
+  const handleDelete = async (uuid) => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      setDeleting(true);
+      try {
+        await deleteUser(uuid);
+        alert("User deleted successfully.");
+        setUser(null); // Clear user data from state after successful deletion
+        navigate("/users");
+      } catch (err) {
+        console.error("Error deleting user:", err.message);
+        alert("Failed to delete the user. Please try again.");
+      } finally {
+        setDeleting(false);
+      }
+    }
+  };
+  
+
 
   if (loading) {
     return (
@@ -128,7 +151,7 @@ const UserDetail = () => {
         {/* Action Section */}
         <div className="bg-gray-50 px-6 py-4 flex justify-start gap-4">
           <SubtleButton label="Edit Profile" onClick={() => hadleEditUser(user)} />
-          <DangerButton label="Delete" onClick={console.log("you clicked me")} />
+          <DangerButton label="Delete" onClick={() => handleDelete(user.uuid)}  disabled={Deleting}   />
         </div>
       </div>
 
