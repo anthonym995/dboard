@@ -41,9 +41,15 @@ export default function UserForm({ user, isOpen, onCancel }) {
       if (user) {
         await updateUser(data);
         toast.success("User updated successfully!");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } else {
         await createUser(data);
         toast.success("User created successfully!");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
     } catch (error) {
       console.error("Error saving user:", error);

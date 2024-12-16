@@ -40,19 +40,22 @@ const UserDetail = () => {
     setIsOpen(true);
   };
 
+
   const handleDelete = async (uuid) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       setDeleting(true);
       try {
         await deleteUser(uuid);
         alert("User deleted successfully.");
-        setUser(null); // Clear user data from state after successful deletion
+        setUser(null); 
         navigate("/users");
       } catch (err) {
         console.error("Error deleting user:", err.message);
+      
         alert("Failed to delete the user. Please try again.");
       } finally {
         setDeleting(false);
+        
       }
     }
   };
