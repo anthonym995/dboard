@@ -1,17 +1,17 @@
-import blogsAPI from "../api/blogsAPI";
+import baseAPI from "./baseAPI";
 
 export const fetchblogs = async () => {
   try {
-    const data = await blogsAPI.get("/blogs");
+    const data = await baseAPI.get("/blogs");
     return data;
   } catch (error) {
     throw new Error(error);
   }
 };
 
-export const fetchPostById = async (id) => {
+export const  blogsById = async (id) => {
   try {
-    const response = await blogsAPI.get(`/blogs/${id}`);
+    const response = await baseAPI.get(`/blogs/${id}`);
     return response.data;
   } catch (error) {
     throw new Error(`Failed to fetch post with ID ${id}: ${error.message}`);

@@ -1,55 +1,52 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchPostById } from "../../../api/blogs"; // Ensure this is correctly defined and imported
+import { blogsById } from "../../../api/blogs";
 import Loader from "../../../components/ui/Loader";
 import ErrorState from "../../../components/ui/ErrorState";
 
 export default function PostDetail() {
-  const [postdata, setPostdata] = useState(null); // State for a single post
-  const [error, setError] = useState(null);
+  const { id } = useParams();
+  const [post, setPost] = useState(null); // Changed to `null` to reflect expected data structure
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const { id } = useParams(); // Get the post ID from the route parameters
-
-
- 
-
-
-
-  const Datacall = async () => {
+  const fetchPost = async () => {
     try {
-      const data = await fetchPostById (id); // Use fetchPostById to get the post by ID
-      if (data) {
-        setPostdata(data);
+      setIsLoading(true);
+      const response = await blogsById(id);
+      console.log('API Response:', response); // Debugging the API response
+      if (response && response.status === 200 && response.data) {
+        setPost(response.data); // Assuming response.data contains the post object
       } else {
-        setError("No post found.");
+        throw new Error("Failed to fetch post data");
       }
     } catch (err) {
-      setError(err.message || "An error occurred while fetching the post.");
+      setError(err);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    Datacall();
-  }, [id]); // Dependency array to ensure fetchData is called when id changes
+    fetchPost();
+  }, [id]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (error) {
-    return <ErrorState errorMessage={error} />;
-  }
-
-  if (!postdata) {
-    return <p>No post found!</p>; // Display when no post is available
-  }
+  if (isLoading) return <Loader />;
+  if (error) return <ErrorState errorMessage={error.message} />;
+  if (!post) return <p className="text-center text-gray-500">No posts found.</p>;
 
   return (
-    <div>
-     
+    <div className="p-4 space-y-8">
+      <div className="bg-white border border-gray-300 rounded-lg shadow-md p-6">
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">{post.title}</h1>
+        <p className="text-sm text-gray-700 mb-2">{post.content}</p>
+        <p className="text-sm text-gray-600">
+          <strong>Author:</strong> {post.author}
+        </p>
+        <p className="text-sm text-gray-600">
+          <strong>Date:</strong> {new Date(post.date).toLocaleDateString()}
+        </p>
+      </div>
     </div>
   );
 }

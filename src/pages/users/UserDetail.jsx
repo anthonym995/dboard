@@ -1,13 +1,15 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Loader from "../../components/ui/Loader";
-import { fetchUserById , deleteUser } from "../../api/users";
+import { fetchUserById, deleteUser } from "../../api/users";
 import ErrorState from "../../components/ui/ErrorState";
 import EmptyState from "../../components/ui/EmptyState";
 import SubtleButton from "../../components/Buttons/SubtleButton";
 import DangerButton from "../../components/Buttons/DangerButton";
 import UserForm from "./components/UserForm";
-import { useNavigate } from "react-router-dom";
+import DeleteModal from "../../components/Modal/DeleteModal";
+import { toast } from "react-toastify";
+
 
 const UserDetail = () => {
   const { id } = useParams();
@@ -16,9 +18,9 @@ const UserDetail = () => {
   const [error, setError] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [Deleting , setDeleting] = useState(false);
+  const [Deleting, setDeleting] = useState(false);
+  const [showmodel, setShowmodel] = useState(false);
   const navigate = useNavigate();
-
 
   const fetchUser = async () => {
     try {
@@ -35,32 +37,29 @@ const UserDetail = () => {
     fetchUser();
   }, []);
 
-  const hadleEditUser = (user) => {
+  const handleEditUser = (user) => {
     setSelectedUser(user);
     setIsOpen(true);
   };
 
+  const togglePopup = () => {
+    setShowmodel(!showmodel);
+  };
 
-  const handleDelete = async (uuid) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      setDeleting(true);
-      try {
-        await deleteUser(uuid);
-        alert("User deleted successfully.");
-        setUser(null); 
-        navigate("/users");
-      } catch (err) {
-        console.error("Error deleting user:", err.message);
-      
-        alert("Failed to delete the user. Please try again.");
-      } finally {
-        setDeleting(false);
-        
-      }
+  const handleDelete = async () => {
+    setDeleting(true);
+    try {
+      await deleteUser(id);
+      toast.success("User deleted successfully.");
+      navigate("/users");
+    } catch (err) {
+      console.error("Error deleting user:", err.message);
+      toast.error("Failed to delete the user. Please try again.");
+    } finally {
+      setDeleting(false);
+      setShowmodel(false);
     }
   };
-  
-
 
   if (loading) {
     return (
@@ -92,12 +91,18 @@ const UserDetail = () => {
         {/* User Header Section */}
         <div className="bg-indigo-600 px-6 py-8 sm:p-10 sm:flex sm:items-center sm:space-x-8">
           <div className="flex-shrink-0">
-            <img className="h-24 w-24 rounded-full ring-4 ring-indigo-300" src={user.image} alt="User profile" />
+            <img
+              className="h-24 w-24 rounded-full ring-4 ring-indigo-300"
+              src={user.image}
+              alt="User profile"
+            />
           </div>
           <div className="mt-4 sm:mt-0">
             <h2 className="text-2xl font-semibold text-white">{user.name}</h2>
             <p className="text-indigo-200">Role: {user.role}</p>
-            <p className="mt-1 text-indigo-200">Joined: {new Date(user.createdAt).toLocaleDateString()}</p>
+            <p className="mt-1 text-indigo-200">
+              Joined: {new Date(user.createdAt).toLocaleDateString()}
+            </p>
             <div className="mt-4 flex space-x-4">
               <a
                 href={`mailto:${user.email}`}
@@ -153,13 +158,22 @@ const UserDetail = () => {
 
         {/* Action Section */}
         <div className="bg-gray-50 px-6 py-4 flex justify-start gap-4">
-          <SubtleButton label="Edit Profile" onClick={() => hadleEditUser(user)} />
-          <DangerButton label="Delete" onClick={() => handleDelete(user.uuid)}  disabled={Deleting}   />
+          <SubtleButton label="Edit Profile" onClick={() => handleEditUser(user)} />
+          <DangerButton label="Delete" onClick={() => togglePopup()} />
         </div>
       </div>
 
-      {/* form */}
-      <UserForm user={selectedUser} isOpen={isOpen} onCancel={() => setIsOpen(false)} />
+      {/* User Form */}
+      <UserForm
+        user={selectedUser}
+        isOpen={isOpen}
+        onCancel={() => setIsOpen(false)}
+      />
+
+      {/* Delete Modal */}
+      {showmodel && (
+        <DeleteModal title="Are you sure you want to delete this user?" onCancel={togglePopup} onConfirm={handleDelete} loading={Deleting} />
+      )}
     </div>
   );
 };
