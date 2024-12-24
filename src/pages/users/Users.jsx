@@ -44,6 +44,7 @@ export default function Users() {
   }
 
   return (
+    <>
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-center">
         <h2 className="text-xl md:text-3xl font-bold">Users</h2>
@@ -56,5 +57,6 @@ export default function Users() {
 
       <UserForm user={selectedUser} isOpen={isOpen} onCancel={() => setIsOpen(false)} />
     </div>
+    </>
   );
 }

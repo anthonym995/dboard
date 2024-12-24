@@ -1,5 +1,5 @@
 import {
-  CalendarIcon,
+  NewspaperIcon,
   ChartPieIcon,
   DocumentDuplicateIcon,
   FolderIcon,
@@ -11,7 +11,7 @@ export const navigation = [
   { name: "Overview", href: "/", icon: HomeIcon },
   { name: "Users", href: "users", icon: UsersIcon },
   { name: "Products", href: "products", icon: FolderIcon },
-  { name: "Calendar", href: "calendar", icon: CalendarIcon },
+  { name: "Blogs", href: "Blogs", icon:  NewspaperIcon },
   { name: "Documents", href: "documents", icon: DocumentDuplicateIcon },
   { name: "Reports", href: "reports", icon: ChartPieIcon },
 ];
