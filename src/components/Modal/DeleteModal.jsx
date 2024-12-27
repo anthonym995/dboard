@@ -1,5 +1,4 @@
 import React from 'react';
-
 export default function DeleteModal({ title, description, onConfirm, onCancel }) {
   return (
     <>
