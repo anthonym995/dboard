@@ -7,7 +7,7 @@ import EmptyState from "../../components/ui/EmptyState";
 import SubtleButton from "../../components/Buttons/SubtleButton";
 import DangerButton from "../../components/Buttons/DangerButton";
 import UserForm from "./components/UserForm";
-import DeleteModal from "../../components/Modal/DeleteModal";
+import ModalPopupSmall from "../../components/Modal/PopupSmall";
 import { toast } from "react-toastify";
 
 
@@ -167,12 +167,18 @@ const UserDetail = () => {
       <UserForm
         user={selectedUser}
         isOpen={isOpen}
-        onCancel={() => setIsOpen(false)}
+        onCancel={() => setIsOpen(false)} z
       />
 
       {/* Delete Modal */}
       {showmodel && (
-        <DeleteModal title="Are you sure you want to delete this user?" onCancel={togglePopup} onConfirm={handleDelete} loading={Deleting} />
+        <ModalPopupSmall
+          isOpen={showmodel}
+          onClose={togglePopup}
+          title="Are you sure you want to delete this user?"
+          onConfirm={handleDelete}
+          onCancel={togglePopup}
+        />
       )}
     </div>
   );
