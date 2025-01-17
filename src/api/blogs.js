@@ -9,11 +9,12 @@ export const fetchblogs = async () => {
   }
 };
 
-export const  blogsById = async (id) => {
+export const blogsById = async (_id) => {
   try {
-    const response = await baseAPI.get(`/blogs/${id}`);
-    return response.data;
+    const response = await baseAPI.get(`/blogs/${_id}`);
+    console.log("Full Response:", response);
+    return response;
   } catch (error) {
-    throw new Error(`Failed to fetch post with ID ${id}: ${error.message}`);
+    throw new Error(`Failed to fetch post with ID ${_id}: ${error.message}`);
   }
 };
