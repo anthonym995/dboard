@@ -12,8 +12,7 @@ export default function Blogs() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
-
+  const [selectedBlogs, setSelectedBlogs] = useState(null);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -27,9 +26,19 @@ export default function Blogs() {
     }
   };
 
-  const handelAddblogs = () => { setSelectedUser(null); setIsOpen(true);}
-  
-  useEffect(() => { fetchData(); }, []);
+  const handelAddblogs = () => {
+    setSelectedBlogs(null);
+    setIsOpen(true);
+  };
+
+  const addcard = (newBlog) => {
+    setBlogs((prevBlogs) => [...prevBlogs, newBlog]); // Add new blog to list
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   if (isLoading) return <Loader height="true" />;
   if (error) return <ErrorState />;
@@ -38,15 +47,24 @@ export default function Blogs() {
     <div className="p-5">
       <div className="flex flex-col md:flex-row md:items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-800 mb-4 md:mb-0">Blogs</h1>
-        <PrimaryButton label="+ Create Blog"  onClick={handelAddblogs}  />
+        <PrimaryButton label="+ Create Blog" onClick={handelAddblogs} />
       </div>
       <div>
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-0 pt-5">
-          {blogs.length === 0 ? <EmptyState /> : blogs.map((blog) => (<BlogItem key={blog._id} blog={blog} />))}
+          {blogs.length === 0 ? (
+            <EmptyState />
+          ) : (
+            blogs.map((blog) => <BlogItem key={blog._id} blog={blog} />)
+          )}
         </ul>
       </div>
       <div>
-         <FromBlogs  user={selectedUser} isOpen={isOpen} onCancel={() => setIsOpen(false)}  />
+        <FromBlogs
+          blogs={selectedBlogs}
+          isOpen={isOpen}
+          onCancel={() => setIsOpen(false)}
+          addcard={addcard}
+        />
       </div>
     </div>
   );

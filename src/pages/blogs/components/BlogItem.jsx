@@ -1,21 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function BlogItem({ blog }) {
-  const DEFAULT_AVATAR = 'http://placekitten.com/250/250';
+  const DEFAULT_AVATAR = "http://placekitten.com/250/250";
 
   const {
     _id,
-    author = 'Anonymous',
-    description = 'No description available',
+    author = "Anonymous",
+    description = "No description available",
     authorAvatar,
-    title = 'Untitled Blog',
+    title = "Untitled Blog",
   } = blog;
 
   const truncateTitle = (title, wordLimit) => {
-    const words = title.split(' ');
+    const words = title.split(" ");
     if (words.length > wordLimit) {
-      return words.slice(0, wordLimit).join(' ') + '...';
+      return words.slice(0, wordLimit).join(" ") + "...";
     }
     return title;
   };
