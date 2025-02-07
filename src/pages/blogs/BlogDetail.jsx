@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { blogsById } from "../../../api/blogs";
-import Loader from "../../../components/ui/Loader";
-import ErrorState from "../../../components/ui/ErrorState";
+import { blogsById } from "../../api/blogs";
+import Loader from "../../components/ui/Loader";
+import ErrorState from "../../components/ui/ErrorState";
 import { GoThumbsdown, GoThumbsup } from "react-icons/go";
 import { RiShareForwardFill } from "react-icons/ri";
 import { FaRegCommentDots } from "react-icons/fa";
 
-
-
-export default function PostDetail() {
+export default function BlogDetail() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,8 +34,8 @@ export default function PostDetail() {
   if (error) return <ErrorState errorMessage={error.message} />;
   if (!post) return <p className="text-center text-gray-500">No posts found.</p>;
 
-  const { title, content, author, status ,categories,tags} = post;
-  
+  const { title, content, author, status, tags } = post;
+
   return (
     <div className="p-4 space-y-8 bg-gray-100 min-h-screen">
       <div className="bg-white border border-gray-300 rounded-lg shadow-md p-6">
@@ -70,7 +68,6 @@ export default function PostDetail() {
             <span>Share</span>
           </button>
         </div>
-  
       </div>
     </div>
   );
