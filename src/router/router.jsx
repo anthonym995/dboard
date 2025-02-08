@@ -6,7 +6,6 @@ import Settings from "../pages/Settings";
 import Blogs from "../pages/blogs/Blogs";
 import Reports from "../pages/Reports";
 import Members from "../pages/Members";
-import Company from "../pages/Company";
 import Profile from "../pages/Profile";
 import NotFound from "../pages/NotFound";
 import UserDetail from "../pages/users/UserDetail";
@@ -24,7 +23,6 @@ const router = createBrowserRouter([
       { path: "/blogs/:id", element: <BlogDetail /> },
       { path: "reports", element: <Reports /> },
       { path: "members", element: <Members /> },
-      { path: "company", element: <Company /> },
       { path: "profile", element: <Profile /> },
       { path: "settings", element: <Settings /> },
     ],
