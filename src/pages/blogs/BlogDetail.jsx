@@ -9,7 +9,7 @@ import { FaRegCommentDots } from "react-icons/fa";
 import { IoArrowBack } from "react-icons/io5";
 import { CiMenuKebab } from "react-icons/ci";
 import { MdOutlineDelete } from "react-icons/md";
-import FormBlogs from "../../pages/blogs/components/FromBlogs";
+import Forms from "../../pages/blogs/components/Forms";
 import DeleteModal from "../../components/Modal/DeleteModal";
 import { toast } from "react-toastify";
 
@@ -149,7 +149,7 @@ export default function BlogDetail() {
       </div>
 
       {isModal && (
-        <FormBlogs isOpen={isModal} onCancel={closeModal} blog={selectedBlog} />
+        <Forms isOpen={isModal} onCancel={closeModal} blog={selectedBlog} />
       )}
 
       {isshow && (

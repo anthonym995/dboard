@@ -5,7 +5,7 @@ import ErrorState from "../../components/ui/ErrorState";
 import PrimaryButton from "../../components/Buttons/PrimaryButton";
 import BlogItem from "../../pages/blogs/components/BlogItem";
 import EmptyState from "../../components/ui/EmptyState";
-import FormBlogs from "../../pages/blogs/components/FromBlogs";
+import Forms from "../../pages/blogs/components/Forms";
 
 export default function Blog() {
   const [blogs, setBlogs] = useState([]);
@@ -64,7 +64,7 @@ export default function Blog() {
         </div>
       </div>
       {isModal && (
-        <FormBlogs isOpen={isModal} onCancel={closeModal} addCard={addCard} />
+        <Forms isOpen={isModal} onCancel={closeModal} addCard={addCard} />
       )}
     </div>
   );

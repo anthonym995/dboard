@@ -7,7 +7,7 @@ import TextAreaFieldMessage from "../../../components/Forms/TextAreaFieldMessage
 import DropdownField from "../../../components/Forms/DropdownField";
 import { updateBlogs, CreateBlogs } from "../../../api/blogs";
 
-export default function FormBlogs({ isOpen, onCancel, blog, addCard }) {
+export default function Forms({ isOpen, onCancel, blog, addCard }) {
   const {
     register,
     handleSubmit,
