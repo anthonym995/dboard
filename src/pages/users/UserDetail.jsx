@@ -10,7 +10,6 @@ import UserForm from "./components/UserForm";
 import DeleteModal from "../../components/Modal/DeleteModal";
 import { toast } from "react-toastify";
 
-
 const UserDetail = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
@@ -129,26 +128,40 @@ const UserDetail = () => {
 
           {/* Recent Activity Section */}
           <div>
-            <h3 className="text-lg font-medium text-gray-900">Recent Activity</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Recent Activity
+            </h3>
             <ul className="mt-4 divide-y divide-gray-200">
               <li className="py-4 flex justify-between items-center">
                 <div className="flex items-center">
-                  <span className="bg-indigo-100 text-indigo-600 p-2 rounded-full">📝</span>
-                  <span className="ml-4 text-gray-700">Updated profile picture</span>
+                  <span className="bg-indigo-100 text-indigo-600 p-2 rounded-full">
+                    📝
+                  </span>
+                  <span className="ml-4 text-gray-700">
+                    Updated profile picture
+                  </span>
                 </div>
                 <span className="text-sm text-gray-500">2 hours ago</span>
               </li>
               <li className="py-4 flex justify-between items-center">
                 <div className="flex items-center">
-                  <span className="bg-indigo-100 text-indigo-600 p-2 rounded-full">📚</span>
-                  <span className="ml-4 text-gray-700">Completed React Course</span>
+                  <span className="bg-indigo-100 text-indigo-600 p-2 rounded-full">
+                    📚
+                  </span>
+                  <span className="ml-4 text-gray-700">
+                    Completed React Course
+                  </span>
                 </div>
                 <span className="text-sm text-gray-500">3 days ago</span>
               </li>
               <li className="py-4 flex justify-between items-center">
                 <div className="flex items-center">
-                  <span className="bg-indigo-100 text-indigo-600 p-2 rounded-full">💬</span>
-                  <span className="ml-4 text-gray-700">Commented on Tailwind CSS Tips</span>
+                  <span className="bg-indigo-100 text-indigo-600 p-2 rounded-full">
+                    💬
+                  </span>
+                  <span className="ml-4 text-gray-700">
+                    Commented on Tailwind CSS Tips
+                  </span>
                 </div>
                 <span className="text-sm text-gray-500">1 week ago</span>
               </li>
@@ -158,7 +171,10 @@ const UserDetail = () => {
 
         {/* Action Section */}
         <div className="bg-gray-50 px-6 py-4 flex justify-start gap-4">
-          <SubtleButton label="Edit Profile" onClick={() => handleEditUser(user)} />
+          <SubtleButton
+            label="Edit Profile"
+            onClick={() => handleEditUser(user)}
+          />
           <DangerButton label="Delete" onClick={() => togglePopup()} />
         </div>
       </div>
@@ -172,7 +188,12 @@ const UserDetail = () => {
 
       {/* Delete Modal */}
       {showmodel && (
-        <DeleteModal title="Are you sure you want to delete this user?" onCancel={togglePopup} onConfirm={handleDelete} loading={Deleting} />
+        <DeleteModal
+          title="Are you sure you want to delete this user?"
+          onCancel={togglePopup}
+          onConfirm={handleDelete}
+          loading={Deleting}
+        />
       )}
     </div>
   );
